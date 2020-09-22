@@ -3,7 +3,7 @@ import { Text, View, TouchableHighlight } from 'react-native';
 import SDK from 'react-native-asdk-tinkoff';
 
 export default () => {
-	const [result, setResult] = React.useState('');
+	// const [result, setResult] = React.useState('');
 
 	const sdk = new SDK({
 		TerminalKey: '1600075810756DEMO',
@@ -21,59 +21,55 @@ export default () => {
 					CustomerKey: 'TEST3',
 				})
 				console.warn(e)
-				return
-				let payment
-				let finish
-				try {
-					payment = await sdk.Init({
-						Amount: 1000,
-						OrderId: 11,
-						CustomerKey: 'TEST3',
-						Receipt: {
-							Phone:'+799999823064',
-							Taxation:'osn',
-							Items: [{
-								Amount: 1000,
-								Name:'Test 3',
-								Price: 250,
-								Quantity: 4,
-								Tax:'none',
-							}]
-						}
-					})
-					if (payment.PaymentId) {
-						finish = await sdk.Finish({
-							PaymentId: payment.PaymentId,
-							PaymentSource: {
-								PAN: '5000000000000108',
-								ExpDate: '1122',
-								CVV: '111',	
-							},
-							Receipt: {
-								Phone:'+799999823064',
-								Taxation:'osn',
-								Items: [{
-									Amount: 1000,
-									Name:'Test 3',
-									Price: 250,
-									Quantity: 4,
-									Tax:'none',
-								}]
-							}
-						})
-					}
-				} catch (error) {
-					console.warn(error)
-				}
-				setResult(JSON.stringify(payment) + JSON.stringify(finish))
+				
+				// try {
+				// 	payment = await sdk.Init({
+				// 		Amount: 1000,
+				// 		OrderId: 11,
+				// 		CustomerKey: 'TEST3',
+				// 		Receipt: {
+				// 			Phone:'+799999823064',
+				// 			Taxation:'osn',
+				// 			Items: [{
+				// 				Amount: 1000,
+				// 				Name:'Test 3',
+				// 				Price: 250,
+				// 				Quantity: 4,
+				// 				Tax:'none',
+				// 			}]
+				// 		}
+				// 	})
+				// 	if (payment.PaymentId) {
+				// 		finish = await sdk.Finish({
+				// 			PaymentId: payment.PaymentId,
+				// 			PaymentSource: {
+				// 				PAN: '5000000000000108',
+				// 				ExpDate: '1122',
+				// 				CVV: '111',	
+				// 			},
+				// 			Receipt: {
+				// 				Phone:'+799999823064',
+				// 				Taxation:'osn',
+				// 				Items: [{
+				// 					Amount: 1000,
+				// 					Name:'Test 3',
+				// 					Price: 250,
+				// 					Quantity: 4,
+				// 					Tax:'none',
+				// 				}]
+				// 			}
+				// 		})
+				// 	}
+				// } catch (error) {
+				// 	console.warn(error)
+				// }
+				// setResult(JSON.stringify(payment) + JSON.stringify(finish))
 			}}>
 				<View style={{ width: '100%', padding: 16 }}>
-					<Text>Test</Text>
+					<Text>Pay()</Text>
 				</View>
 			</TouchableHighlight>
-
-
-			<Text style={{ paddingTop: 16 }}>Result: {result}</Text>
+			{/* <Text style={{ paddingTop: 16 }}>Result: {result}</Text> */}
 		</View>
 	);
 }

@@ -33,63 +33,88 @@ class AsdkTinkoff: NSObject {
     }
     
     // MARK - Pay
+    
     @objc(Pay:withResolver:withRejecter:)
     func Pay(json:String, resolve:@escaping RCTPromiseResolveBlock, reject:@escaping RCTPromiseRejectBlock) -> Void {
         Configure(json:json, resolve:resolve, reject:reject)
 
         let data = try! JSONDecoder().decode(PaymentInitData.self, from: json.data(using: .utf8)!)
-        
-//        let rootViewController = UIApplication.shared.delegate?.window??.rootViewController
-        
+                
         DispatchQueue.main.sync {
-            let cfg = AcquiringViewConfiguration.init()
-            self.ui?.presentPaymentView(on: (UIApplication.shared.delegate?.window!?.rootViewController)!, paymentData: data, configuration: cfg) { (res) in
+            let viewConfigration = AcquiringViewConfiguration.init()
+            viewConfigration.localizableInfo = AcquiringViewConfiguration.LocalizableInfo.init(lang: "ru")
+            self.ui?.presentPaymentView(on: (UIApplication.shared.delegate?.window!?.rootViewController)!, paymentData: data, configuration: viewConfigration) { (res) in
+                switch res {
+                    case .success(let success):
+                        self.promiseResolve?(try! success.encode2JSONObject())
+                    case .failure(let error):
+                        self.promiseReject?(nil, nil, error)
+                }
             }
         }
+    }
+    
+    // MARK - ApplePay
+    
+    @objc(ApplePay:withResolver:withRejecter:)
+    func ApplePay(json:String, resolve:@escaping RCTPromiseResolveBlock, reject:@escaping RCTPromiseRejectBlock) -> Void {
+        Configure(json:json, resolve:resolve, reject:reject)
+
+        let data = try! JSONDecoder().decode(PaymentInitData.self, from: json.data(using: .utf8)!)
+                
+        DispatchQueue.main.sync {
+            let viewConfigration = AcquiringViewConfiguration.init()
+            viewConfigration.localizableInfo = AcquiringViewConfiguration.LocalizableInfo.init(lang: "ru")
+            self.ui?.presentPaymentApplePay(
+                on: (UIApplication.shared.delegate?.window!?.rootViewController)!,
+                paymentData: data,
+                viewConfiguration: viewConfigration,
+                paymentConfiguration: .init()) { (res) in
+                    switch res {
+                        case .success(let success):
+                            self.promiseResolve?(try! success.encode2JSONObject())
+                        case .failure(let error):
+                            self.promiseReject?(nil, nil, error)
+                    }
+                }
+        }
+    }
+
+//    // MARK - Init
 //
-//        let configuration = AcquiringViewConfiguration.init()
+//    @objc(Init:withResolver:withRejecter:)
+//    func Init(json:String, resolve:@escaping RCTPromiseResolveBlock, reject:@escaping RCTPromiseRejectBlock) -> Void {
 //
-//        DispatchQueue.main.sync {
-//            self.ui?.presentPaymentView(on: rootViewController!, paymentData: data, configuration: configuration) { (res) in
-//          }
+//        Configure(json:json, resolve:resolve, reject:reject)
+//
+//        let paymentData = try! JSONDecoder().decode(PaymentInitData.self, from: json.data(using: .utf8)!)
+//
+//        _ = sdk?.paymentInit(data: paymentData) { (res) in
+//            switch res {
+//                case .success(let success):
+//                    self.promiseResolve?(try! success.encode2JSONObject())
+//                case .failure(let error):
+//                    self.promiseReject?(nil, nil, error)
+//            }
 //        }
-    }
-    
-    // MARK - Init
-    
-    @objc(Init:withResolver:withRejecter:)
-    func Init(json:String, resolve:@escaping RCTPromiseResolveBlock, reject:@escaping RCTPromiseRejectBlock) -> Void {
-       
-        Configure(json:json, resolve:resolve, reject:reject)
-
-        let paymentData = try! JSONDecoder().decode(PaymentInitData.self, from: json.data(using: .utf8)!)
-
-        _ = sdk?.paymentInit(data: paymentData) { (res) in
-            switch res {
-                case .success(let success):
-                    self.promiseResolve?(try! success.encode2JSONObject())
-                case .failure(let error):
-                    self.promiseReject?(nil, nil, error)
-            }
-        }
-    }
-    
-    // MARK - FinishAuthorize
-    
-    @objc(Finish:withResolver:withRejecter:)
-    func Finish(json:String, resolve:@escaping RCTPromiseResolveBlock, reject:@escaping RCTPromiseRejectBlock) -> Void {
-        
-        Configure(json:json, resolve:resolve, reject:reject)
-        
-        let data = try! JSONDecoder().decode(PaymentFinishRequestData.self, from: json.data(using: .utf8)!)
-
-        _ = sdk?.paymentFinish(data: data) { (res) in
-            switch res {
-                case .success(let success):
-                    self.promiseResolve?(try! success.encode2JSONObject())
-                case .failure(let error):
-                    self.promiseReject?(nil, nil, error)
-            }
-        }
-    }
+//    }
+//
+//    // MARK - FinishAuthorize
+//
+//    @objc(Finish:withResolver:withRejecter:)
+//    func Finish(json:String, resolve:@escaping RCTPromiseResolveBlock, reject:@escaping RCTPromiseRejectBlock) -> Void {
+//
+//        Configure(json:json, resolve:resolve, reject:reject)
+//
+//        let data = try! JSONDecoder().decode(PaymentFinishRequestData.self, from: json.data(using: .utf8)!)
+//
+//        _ = sdk?.paymentFinish(data: data) { (res) in
+//            switch res {
+//                case .success(let success):
+//                    self.promiseResolve?(try! success.encode2JSONObject())
+//                case .failure(let error):
+//                    self.promiseReject?(nil, nil, error)
+//            }
+//        }
+//    }
 }
