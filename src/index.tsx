@@ -1,6 +1,5 @@
 import { NativeModules, Platform } from 'react-native'
 
-
 export type Config = {
     TerminalKey: string
     Password: string
@@ -49,7 +48,6 @@ export interface Finish {
         errorDetails?: string
     }
 }
-
 
 export type ReceiptTaxation =
     'osn' | // общая
@@ -150,7 +148,6 @@ export type Receipt = {
     Items: ReceiptItem[]
 }
 
-
 export default class TinkoffASDKCore {
     private config?: Config
 
@@ -170,6 +167,16 @@ export default class TinkoffASDKCore {
             throw new Error(`Cannot use ApplePay on ${Platform.OS}`)
         }
         return NativeModules.AsdkTinkoff.ApplePay(JSON.stringify({
+            ...this.config,
+            ...params
+        }))
+    }
+    
+    GooglePay(params: Init['request']): Promise<Init['response']> {
+        if (Platform.OS !== 'android') {
+            throw new Error(`Cannot use GooglePay on ${Platform.OS}`)
+        }
+        return NativeModules.AsdkTinkoff.GooglePay(JSON.stringify({
             ...this.config,
             ...params
         }))
