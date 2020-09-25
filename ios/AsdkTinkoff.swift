@@ -28,6 +28,9 @@ class AsdkTinkoff: NSObject {
             ),
             server: .prod
         )
+        
+        configuration.language = AcquiringSdkLanguage(rawValue: "ru")
+        
         sdk = try? AcquiringSdk.init(configuration: configuration)
         ui = try? AcquiringUISDK.init(configuration: configuration)
     }
