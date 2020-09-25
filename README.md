@@ -13,9 +13,9 @@ npm install react-native-asdk-tinkoff
 ```js
 import AsdkTinkoff from "react-native-asdk-tinkoff";
 
-// ...
-
-const result = await AsdkTinkoff.multiply(3, 7);
+const result = await AsdkTinkoff.Pay(/*Init*/);
+const result = await AsdkTinkoff.ApplePay(/*Init*/);
+const result = await AsdkTinkoff.GooglePay(/*Init*/);
 ```
 
 ## Contributing
