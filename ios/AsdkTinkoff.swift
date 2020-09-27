@@ -82,8 +82,12 @@
                 }
         }
         
-        @objc(ApplePayAvailable:withResolver:withRejecter:)
-        func ApplePayAvailable(merchant:String, resolve:@escaping RCTPromiseResolveBlock, reject:@escaping RCTPromiseRejectBlock) -> Void {
+        // MARK - ApplePayAvailable
+
+        @objc(ApplePayAvailable:merchant:withResolver:withRejecter:)
+        func ApplePayAvailable(json:String, merchant:String, resolve:@escaping RCTPromiseResolveBlock, reject:@escaping RCTPromiseRejectBlock) -> Void {
+            Configure(json:json, resolve:resolve, reject:reject)
+            
             var paymentConfiguration = AcquiringUISDK.ApplePayConfiguration.init()
             
             paymentConfiguration.merchantIdentifier = merchant
