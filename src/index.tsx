@@ -162,14 +162,14 @@ export default class TinkoffASDKCore {
         }))
     }
 
-    ApplePay(params: Init['request']): Promise<Init['response']> {
+    ApplePay(params: Init['request'], merchant: String): Promise<Init['response']> {
         if (Platform.OS !== 'ios') {
             throw new Error(`Cannot use ApplePay on ${Platform.OS}`)
         }
         return NativeModules.AsdkTinkoff.ApplePay(JSON.stringify({
             ...this.config,
-            ...params
-        }))
+            ...params,
+        }), merchant)
     }
     
     GooglePay(params: Init['request']): Promise<Init['response']> {
