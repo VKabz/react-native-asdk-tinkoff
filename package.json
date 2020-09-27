@@ -1,6 +1,6 @@
 {
   "name": "react-native-asdk-tinkoff",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "ASDK Tinkoff",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
