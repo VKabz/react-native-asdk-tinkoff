@@ -162,6 +162,13 @@ export default class TinkoffASDKCore {
         }))
     }
 
+    ApplePayAvailable(merchant: String): Promise<Boolean> {
+        if (Platform.OS !== 'ios') {
+            return Promise.resolve(false)
+        }
+        return NativeModules.AsdkTinkoff.ApplePayAvailable(merchant)
+    }
+
     ApplePay(params: Init['request'], merchant: String): Promise<Init['response']> {
         if (Platform.OS !== 'ios') {
             throw new Error(`Cannot use ApplePay on ${Platform.OS}`)

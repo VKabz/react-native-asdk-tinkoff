@@ -12,10 +12,13 @@
 }
 
 RCT_EXTERN_METHOD(Pay:
-(NSString*)params withResolver:(RCTPromiseResolveBlock)resolve withRejecter:(RCTPromiseRejectBlock)reject)
+                  (NSString*)params withResolver:(RCTPromiseResolveBlock)resolve withRejecter:(RCTPromiseRejectBlock)reject)
 
 RCT_EXTERN_METHOD(ApplePay:
                   (NSString*)params merchant:(NSString*)merchant withResolver:(RCTPromiseResolveBlock)resolve withRejecter:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(ApplePayAvailable:
+                  (NSString*)merchant withResolver:(RCTPromiseResolveBlock)resolve withRejecter:(RCTPromiseRejectBlock)reject)
 
 //RCT_EXTERN_METHOD(Init:
 //                  (NSString*)params withResolver:(RCTPromiseResolveBlock)resolve withRejecter:(RCTPromiseRejectBlock)reject)

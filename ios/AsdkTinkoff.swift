@@ -67,7 +67,7 @@
             var paymentConfiguration = AcquiringUISDK.ApplePayConfiguration.init()
             
             paymentConfiguration.merchantIdentifier = merchant
-            
+
             self.ui?.presentPaymentApplePay(
                 on: (UIApplication.shared.delegate?.window!?.rootViewController)!,
                 paymentData: data,
@@ -80,6 +80,16 @@
                             self.promiseReject?(nil, nil, error)
                     }
                 }
+        }
+        
+        @objc(ApplePayAvailable:withResolver:withRejecter:)
+        func ApplePayAvailable(merchant:String, resolve:@escaping RCTPromiseResolveBlock, reject:@escaping RCTPromiseRejectBlock) -> Void {
+            var paymentConfiguration = AcquiringUISDK.ApplePayConfiguration.init()
+            
+            paymentConfiguration.merchantIdentifier = merchant
+            let result = self.ui?.canMakePaymentsApplePay(with: paymentConfiguration)
+            
+            resolve(result ?? false)
         }
 
     //    // MARK - Init
