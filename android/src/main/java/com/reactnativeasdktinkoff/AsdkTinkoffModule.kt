@@ -130,6 +130,7 @@ class AsdkTinkoffModule(reactContext: ReactApplicationContext) : ReactContextBas
                 is String -> map.putString(key, value)
                 is WritableMap -> map.putMap(key, value)
                 is WritableArray -> map.putArray(key, value)
+                is Long -> map.putString(key, value.toString())
                 else -> throw IllegalArgumentException("Unsupported value type ${value::class.java.name} for key [$key]")
             }
         }
@@ -158,9 +159,9 @@ class AsdkTinkoffModule(reactContext: ReactApplicationContext) : ReactContextBas
 
     }
 
-    private fun handlePaymentResult(resultCode: Int) {
+    private fun handlePaymentResult(resultCode: Int, intent: Intent?) {
         when (resultCode) {
-            RESULT_OK -> promise.resolve(writableMapOf("Success" to true))
+            RESULT_OK -> promise.resolve(writableMapOf("Success" to true, "paymentId" to intent?.getLongExtra(TinkoffAcquiring.EXTRA_PAYMENT_ID, -1)))
             RESULT_CANCELED -> promise.resolve(writableMapOf("Success" to false))
             RESULT_ERROR -> promise.resolve(writableMapOf("Success" to false))
         }
@@ -168,7 +169,7 @@ class AsdkTinkoffModule(reactContext: ReactApplicationContext) : ReactContextBas
 
     override fun onActivityResult(activity: Activity?, requestCode: Int, resultCode: Int, data: Intent?) {
       when (requestCode) {
-          PAYMENT_REQUEST_CODE -> handlePaymentResult(resultCode)
+          PAYMENT_REQUEST_CODE -> handlePaymentResult(resultCode, data)
           GOOGLE_PAY_REQUEST_CODE -> handleGooglePayResult(resultCode, data)
       }
     }
