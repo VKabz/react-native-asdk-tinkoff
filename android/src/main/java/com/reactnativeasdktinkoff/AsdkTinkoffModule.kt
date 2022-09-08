@@ -59,7 +59,7 @@ class AsdkTinkoffModule(reactContext: ReactApplicationContext) : ReactContextBas
 
         return  PaymentOptions().setOptions {
             orderOptions {
-                orderId = (data["OrderId"] as Int).toString()
+                orderId = (data["OrderId"] as Long).toString()
                 amount =  Money.ofCoins((data["Amount"] as Int).toLong())
                 recurrentPayment = false
             }
