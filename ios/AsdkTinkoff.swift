@@ -23,7 +23,6 @@
             let configuration = AcquiringSdkConfiguration(
                 credential: AcquiringSdkCredential(
                     terminalKey: cfg.TerminalKey,
-                    password: cfg.Password,
                     publicKey: cfg.PublicKey
                 ),
                 server: .prod
