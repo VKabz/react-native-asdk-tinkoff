@@ -1,3 +1,6 @@
+Это копия репозитория - https://github.com/itrcz/react-native-asdk-tinkoff
+Но ведётся время от времени подержка кода
+
 # react-native-asdk-tinkoff
 
 ASDK Tinkoff
