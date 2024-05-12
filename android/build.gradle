@@ -29,13 +29,13 @@ android {
   compileSdkVersion getExtOrIntegerDefault('compileSdkVersion')
   buildToolsVersion getExtOrDefault('buildToolsVersion')
   defaultConfig {
-    minSdkVersion 19
+    minSdkVersion 24
     targetSdkVersion getExtOrIntegerDefault('targetSdkVersion')
     versionCode 1
     versionName "1.0"
-    
+
   }
-  
+
   buildTypes {
     release {
       minifyEnabled false
@@ -127,5 +127,8 @@ dependencies {
   // noinspection GradleDynamicVersion
   api 'com.facebook.react:react-native:+'
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-  implementation 'ru.tinkoff.acquiring:ui:2.0.3'
+  implementation 'ru.tinkoff.acquiring:ui:2.13.3'
+  implementation 'ru.tinkoff.acquiring:threeds-wrapper:2.13.3'
+  implementation 'ru.tinkoff.acquiring:threeds-sdk:2.13.3'
+
 }
