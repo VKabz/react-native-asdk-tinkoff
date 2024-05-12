@@ -64,6 +64,7 @@ class AsdkTinkoffModule(reactContext: ReactApplicationContext) : ReactContextBas
 
 
       val customer = data["CustomerKey"] as String
+      val userEmail = data["email"] as String
 
       val PublicKey = data["PublicKey"] as String
       val TerminalKey = data["TerminalKey"] as String
@@ -81,6 +82,7 @@ class AsdkTinkoffModule(reactContext: ReactApplicationContext) : ReactContextBas
           customerOptions {
             checkType = CheckType.NO.toString()
             customerKey = customer
+            email = userEmail
           }
           featuresOptions {
             useSecureKeyboard = true
